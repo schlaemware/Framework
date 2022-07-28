@@ -1,450 +1,1494 @@
-﻿namespace SW.Framework.Extensions
-{
+﻿namespace SW.Framework.Extensions {
+  /// <summary>
+  /// Extension methods for <see cref="Random"/>.
+  /// </summary>
+  public static class RandomExtensions {
+    #region CONSTANTS
+    public const string ALPHABET = "AÄBCDEFGHIJKLMNOÖPQRSTUÜVWXYZaäbcdefghijklmnoöpqrstuüvwxyz";
+    public const string ALPHANUMERIC = ALPHABET + "0123456789 _!?,.:;'\"*#@()[]{}";
+
+    public static readonly string[] FIRSTNAMES = new string[] {
+      "Aaliyah",
+      "Aaron",
+      "Ada",
+      "Adam",
+      "Adelheid",
+      "Adolf",
+      "Adrian",
+      "Adriana",
+      "Agnes",
+      "Ahmet",
+      "Aiden",
+      "Albert",
+      "Alea",
+      "Alena",
+      "Alessia",
+      "Alessio",
+      "Alex",
+      "Alexa",
+      "Alexander",
+      "Alexandra",
+      "Aleyna",
+      "Alfred",
+      "Ali",
+      "Alia",
+      "Alice",
+      "Alicia",
+      "Alina",
+      "Alisa",
+      "Alissa",
+      "Alma",
+      "Alva",
+      "Amalia",
+      "Amelia",
+      "Amelie",
+      "Amilia",
+      "Amin",
+      "Amina",
+      "Amir",
+      "Amira",
+      "Amy",
+      "Anastasia",
+      "André",
+      "Andrea",
+      "Andreas",
+      "Angela",
+      "Angelika",
+      "Angelina",
+      "Anita",
+      "Anja",
+      "Anke",
+      "Ann",
+      "Anna",
+      "Annabell",
+      "Annalena",
+      "Anne",
+      "Annegret",
+      "Annelie",
+      "Anneliese",
+      "Annemarie",
+      "Annette",
+      "Anni",
+      "Annika",
+      "Antje",
+      "Anton",
+      "Antonia",
+      "Antonio",
+      "Arian",
+      "Ariana",
+      "Ariane",
+      "Arjen",
+      "Armin",
+      "Arne",
+      "Arthur",
+      "Arya",
+      "Ashley",
+      "Astrid",
+      "Aurelia",
+      "Aurora",
+      "Ava",
+      "Axel",
+      "Ayla",
+      "Aylin",
+      "Azra",
+      "Barbara",
+      "Bastian",
+      "Beat",
+      "Beate",
+      "Bella",
+      "Ben",
+      "Benedikt",
+      "Benjamin",
+      "Benno",
+      "Bernd",
+      "Bernhard",
+      "Berta",
+      "Bettina",
+      "Bianca",
+      "Birgit",
+      "Birte",
+      "Björn",
+      "Boris",
+      "Brian",
+      "Brigitte",
+      "Britta",
+      "Brunhilde",
+      "Bruno",
+      "Carina",
+      "Carla",
+      "Carlo",
+      "Carlos",
+      "Carmen",
+      "Carola",
+      "Carole",
+      "Carolin",
+      "Carolina",
+      "Caroline",
+      "Caspar",
+      "Cassandra",
+      "Cataleya",
+      "Cedric",
+      "Celina",
+      "Céline",
+      "Chantal",
+      "Charlie",
+      "Charlotta",
+      "Charlotte",
+      "Cheyenne",
+      "Chiara",
+      "Christa",
+      "Christian",
+      "Christiane",
+      "Christina",
+      "Christine",
+      "Christoph",
+      "Christopher",
+      "Cindy",
+      "Claire",
+      "Clara",
+      "Claudia",
+      "Clea",
+      "Clemens",
+      "Cleo",
+      "Colin",
+      "Connor",
+      "Cora",
+      "Corina",
+      "Corine",
+      "Corinna",
+      "Cornelia",
+      "Dagmar",
+      "Damian",
+      "Damon",
+      "Dana",
+      "Daniel",
+      "Daniela",
+      "Danny",
+      "Daria",
+      "David",
+      "Dean",
+      "Delia",
+      "Denise",
+      "Dennis",
+      "Detlef",
+      "Diana",
+      "Diego",
+      "Dieter",
+      "Dietmar",
+      "Dietrich",
+      "Dilara",
+      "Dirk",
+      "Dominic",
+      "Dominik",
+      "Dominique",
+      "Dora",
+      "Doris",
+      "Dorothea",
+      "Dustin",
+      "Eckhard",
+      "Edda",
+      "Eddy",
+      "Edgar",
+      "Edith",
+      "Edward",
+      "Edwin",
+      "Egon",
+      "Elea",
+      "Eleanor",
+      "Elena",
+      "Eleonore",
+      "Elfriede",
+      "Eliane",
+      "Eliana",
+      "Elias",
+      "Elijah",
+      "Elin",
+      "Eline",
+      "Elina",
+      "Elisa",
+      "Elisabeth",
+      "Elise",
+      "Elke",
+      "Ella",
+      "Elli",
+      "Elsa",
+      "Else",
+      "Emanuel",
+      "Emely",
+      "Emil",
+      "Emilia",
+      "Emilian",
+      "Emilio",
+      "Emily",
+      "Emir",
+      "Emma",
+      "Emmi",
+      "Enrico",
+      "Erich",
+      "Erik",
+      "Erika",
+      "Erna",
+      "Ernst",
+      "Erwin",
+      "Esther",
+      "Eva",
+      "Evelyn",
+      "Fabian",
+      "Fabienne",
+      "Fabio",
+      "Felicitas",
+      "Felix",
+      "Ferdinand",
+      "Finja",
+      "Finn",
+      "Fiona",
+      "Florentine",
+      "Florian",
+      "Frank",
+      "Fanz",
+      "Franziska",
+      "Frederik",
+      "Freya",
+      "Frieda",
+      "Friedrich",
+      "Fritz",
+      "Gabriel",
+      "Gabriela",
+      "Gabriele",
+      "Georg",
+      "Gerd",
+      "Gerda",
+      "Gebhard",
+      "Gerhard",
+      "Gertrud",
+      "Gina",
+      "Gisela",
+      "Giulia",
+      "Greta",
+      "Grete",
+      "Gudrun",
+      "Guido",
+      "Gunnar",
+      "Gustav",
+      "Günther",
+      "Hailey",
+      "Hannah",
+      "Hannelore",
+      "Hannes",
+      "Hans",
+      "Harald",
+      "Harry",
+      "Hartmut",
+      "Hedwig",
+      "Heidi",
+      "Heike",
+      "Heiko",
+      "Heinrich",
+      "Heinz",
+      "Helen",
+      "Helena",
+      "Helene",
+      "Helga",
+      "Helmut",
+      "Hendrik",
+      "Henriette",
+      "Henrik",
+      "Henrike",
+      "Henry",
+      "Herbert",
+      "Hermann",
+      "Hermine",
+      "Hertha",
+      "Hilda",
+      "Hildegard",
+      "Holger",
+      "Horst",
+      "Hugo",
+      "Ian",
+      "Ibrahim",
+      "Ida",
+      "Ilja",
+      "Ilse",
+      "Ilyas",
+      "Immanuel",
+      "Ina",
+      "Inga",
+      "Inge",
+      "Ingeborg",
+      "Ingo",
+      "Ingrid",
+      "Irene",
+      "Iris",
+      "Irma",
+      "Irmgard",
+      "Isabell",
+      "Isabella",
+      "Jack",
+      "Jacqueline",
+      "Jakob",
+      "James",
+      "Jamie",
+      "Jan",
+      "Jana",
+      "Janina",
+      "Janine",
+      "Jannik",
+      "Jannis",
+      "Jano",
+      "Janosch",
+      "Jaro",
+      "Jaron",
+      "Jasmin",
+      "Jasmina",
+      "Jasmine",
+      "Jason",
+      "Jasper",
+      "Jeanette",
+      "Jennifer",
+      "Jenny",
+      "Jens",
+      "Jeremy",
+      "Jessica",
+      "Jill",
+      "Joachim",
+      "Joana",
+      "Jochen",
+      "Joel",
+      "Joelle",
+      "Johann",
+      "Johanna",
+      "Johannes",
+      "John",
+      "Jonas",
+      "Jonathan",
+      "Josef",
+      "Josephine",
+      "Joshua",
+      "Judith",
+      "Julia",
+      "Julian",
+      "Julie",
+      "Julien",
+      "Julius",
+      "Justin",
+      "Justus",
+      "Jörg",
+      "Jürgen",
+      "Kai",
+      "Kaja",
+      "Karen",
+      "Karin",
+      "Karl",
+      "Karsten",
+      "Katharina",
+      "Kassandra",
+      "Katja",
+      "Katrin",
+      "Kathrin",
+      "Kerstin",
+      "Kevin",
+      "Kilian",
+      "Kim",
+      "Kimberly",
+      "Kira",
+      "Klaus",
+      "Konrad",
+      "Konstantin",
+      "Kristin",
+      "Kurt",
+      "Ladina",
+      "Lana",
+      "Lara",
+      "Larissa",
+      "Lars",
+      "Lasse",
+      "Laura",
+      "Laurenz",
+      "Laurin",
+      "Layla",
+      "Lea",
+      "Leander",
+      "Leandra",
+      "Leandro",
+      "Lena",
+      "Lenny",
+      "Leo",
+      "Leon",
+      "Leonard",
+      "Leonardo",
+      "Leonhard",
+      "Leonidas",
+      "Leonie",
+      "Leopold",
+      "Letizia",
+      "Levi",
+      "Levin",
+      "Leyla",
+      "Lia",
+      "Liam",
+      "Liana",
+      "Lieselotte",
+      "Liliana",
+      "Lilly",
+      "Lina",
+      "Linda",
+      "Linus",
+      "Lionel",
+      "Lisa",
+      "Lisbeth",
+      "Livia",
+      "Lorena",
+      "Lorenz",
+      "Lothar",
+      "Lotta",
+      "Lotte",
+      "Louis",
+      "Luana",
+      "Luca",
+      "Lucy",
+      "Ludwig",
+      "Luisa",
+      "Luise",
+      "Lukas",
+      "Luke",
+      "Luna",
+      "Madlen",
+      "Magdalena",
+      "Maja",
+      "Malou",
+      "Manfred",
+      "Manuel",
+      "Manuela",
+      "Mara",
+      "Marc",
+      "Marcel",
+      "Marco",
+      "Mareike",
+      "Maren",
+      "Margrit",
+      "Margrith",
+      "Maria",
+      "Marianne",
+      "Marie",
+      "Marina",
+      "Mario",
+      "Marion",
+      "Marionne",
+      "Markus",
+      "Marleen",
+      "Marlene",
+      "Marlies",
+      "Martha",
+      "Martin",
+      "Martina",
+      "Marvin",
+      "Mathilda",
+      "Matteo",
+      "Matthias",
+      "Maurice",
+      "Max",
+      "Maximilian",
+      "Mechthild",
+      "Melanie",
+      "Melina",
+      "Melinda",
+      "Melissa",
+      "Melvin",
+      "Mia",
+      "Micha",
+      "Michael",
+      "Michaela",
+      "Michel",
+      "Michelle",
+      "Mike",
+      "Milena",
+      "Milo",
+      "Miriam",
+      "Mirko",
+      "Mohammed",
+      "Mona",
+      "Monika",
+      "Monique",
+      "Moritz",
+      "Mustafa",
+      "Nadine",
+      "Nadja",
+      "Nael",
+      "Nala",
+      "Nancy",
+      "Naomi",
+      "Natalie",
+      "Nathalie",
+      "Nathan",
+      "Nayla",
+      "Nela",
+      "Nele",
+      "Nelly",
+      "Nevio",
+      "Nick",
+      "Nico",
+      "Nicolas",
+      "Nicole",
+      "Niklas",
+      "Nikolai",
+      "Nils",
+      "Nina",
+      "Noah",
+      "Noel",
+      "Noelle",
+      "Noemi",
+      "Nora",
+      "Norbert",
+      "Olaf",
+      "Olga",
+      "Oliver",
+      "Olivia",
+      "Omar",
+      "Ophelia",
+      "Oskar",
+      "Otto",
+      "Palina",
+      "Pamela",
+      "Pascal",
+      "Pascale",
+      "Patricia",
+      "Patrick",
+      "Patrizia",
+      "Paul",
+      "Paula",
+      "Paulina",
+      "Pauline",
+      "Peter",
+      "Petra",
+      "Phil",
+      "Philipp",
+      "Philippa",
+      "Pia",
+      "Quentin",
+      "Rainer",
+      "Ralf",
+      "Ramona",
+      "Raphael",
+      "Rebecca",
+      "Regina",
+      "Reinhardt",
+      "Renate",
+      "René",
+      "Ricardo",
+      "Richard",
+      "Rita",
+      "Robert",
+      "Robin",
+      "Roland",
+      "Rolf",
+      "Roman",
+      "Ronja",
+      "Ronny",
+      "Rosa",
+      "Rosalie",
+      "Rosemarie",
+      "Rudi",
+      "Rudolf",
+      "Ruth",
+      "Rüdiger",
+      "Sabine",
+      "Sabrina",
+      "Sam",
+      "Samantha",
+      "Samira",
+      "Samu",
+      "Samuel",
+      "Sandra",
+      "Sandro",
+      "Sarah",
+      "Sarina",
+      "Sascha",
+      "Saskia",
+      "Sebastian",
+      "Selina",
+      "Selma",
+      "Sibylle",
+      "Siefgried",
+      "Sienna",
+      "Sigrid",
+      "Silas",
+      "Silke",
+      "Silvia",
+      "Simon",
+      "Simone",
+      "Sina",
+      "Smilla",
+      "Sonja",
+      "Sophia",
+      "Sophie",
+      "Stefan",
+      "Stefanie",
+      "Steffen",
+      "Stella",
+      "Steven",
+      "Stine",
+      "Susanne",
+      "Svea",
+      "Sven",
+      "Svenja",
+      "Tabea",
+      "Talea",
+      "Tamara",
+      "Tamina",
+      "Tammo",
+      "Tanja",
+      "Tara",
+      "Tatjana",
+      "Tessa",
+      "Thalia",
+      "Thea",
+      "Theo",
+      "Theodor",
+      "Theresa",
+      "Thies",
+      "Thilo",
+      "Thomas",
+      "Thore",
+      "Tiago",
+      "Tilda",
+      "Till",
+      "Tim",
+      "Timo",
+      "Timon",
+      "Tina",
+      "Titus",
+      "Tjark",
+      "Tobias",
+      "Tom",
+      "Toni",
+      "Torben",
+      "Torsten",
+      "Tristan",
+      "Tuana",
+      "Tyler",
+      "Udo",
+      "Ulrich",
+      "Ulrike",
+      "Ursula",
+      "Ute",
+      "Uwe",
+      "Valentin",
+      "Valentina",
+      "Valeria",
+      "Valerie",
+      "Vanessa",
+      "Vera",
+      "Verena",
+      "Veronika",
+      "Victoria",
+      "Victor",
+      "Viktor",
+      "Vince",
+      "Vincent",
+      "Vivien",
+      "Volker",
+      "Walter",
+      "Waltraud",
+      "Werner",
+      "Wiebke",
+      "Wilfried",
+      "Wilhelm",
+      "Wilhelmine",
+      "Willi",
+      "William",
+      "Wilma",
+      "Wolf",
+      "Wolfgang",
+      "Xaver",
+      "Xavier",
+      "Xenia",
+      "Xeno",
+      "Yanna",
+      "Yannick",
+      "Yara",
+      "Yasin",
+      "Ylvie",
+      "Yuri",
+      "Yusuf",
+      "Yvonne",
+      "Zacharias",
+      "Zachary",
+      "Zayn",
+      "Zeynep",
+      "Zoe",
+      "Zoey"
+     };
+
+    public static readonly string[] LASTNAMES = new string[] {
+      "Abbold",
+      "Abderhalden",
+      "Abegg",
+      "Abels",
+      "Ablinger",
+      "Abt",
+      "Ackermann",
+      "Adank",
+      "Aeberhard",
+      "Aebersold",
+      "Aepli",
+      "Aerni",
+      "Aeschbacher",
+      "Affentranger",
+      "Affolter",
+      "Ahrens",
+      "Albrecht",
+      "Alge",
+      "Ammann",
+      "Amrein",
+      "Amstutz",
+      "Anliker",
+      "Bach",
+      "Bachfischer",
+      "Bächler",
+      "Bachmann",
+      "Bader",
+      "Baiker",
+      "Ballmer",
+      "Balz",
+      "Bänziger",
+      "Bardelli",
+      "Barmettler",
+      "Barnieck",
+      "Bartels",
+      "Barth",
+      "Bärtsch",
+      "Bauer",
+      "Baumann",
+      "Baumgartner",
+      "Benz",
+      "Berger",
+      "Bieri",
+      "Bischof",
+      "Bischofberger",
+      "Brändle",
+      "Buschor",
+      "Camenisch",
+      "Carnier",
+      "Caduff",
+      "Christen",
+      "Corsini",
+      "Cristuzzi",
+      "Czech",
+      "Dahinden",
+      "Dähler",
+      "Dallmann",
+      "Debrunner",
+      "Decker",
+      "Degasper",
+      "Degasperi",
+      "Degen",
+      "Di Maria",
+      "Dittmann",
+      "Dodic",
+      "Dolder",
+      "Döriger",
+      "Duff",
+      "Ehrlich",
+      "Färber",
+      "Frank",
+      "Frei",
+      "Gabathuler",
+      "Göthe",
+      "Hofer",
+      "Hongler",
+      "Illedits",
+      "Indermaur",
+      "Jud",
+      "Krüsi",
+      "Künzler",
+      "Kurz",
+      "Lanz",
+      "Mannhart",
+      "Niederer",
+      "Nolte",
+      "Odermatt",
+      "Pfenniger",
+      "Pizio",
+      "Quadry",
+      "Quintero",
+      "Räss",
+      "Rebholz",
+      "Riedi",
+      "Riedener",
+      "Roth",
+      "Schär",
+      "Schläpfer",
+      "Seitz",
+      "Sonderegger",
+      "Strack",
+      "Strauss",
+      "Thür",
+      "Tischhauser",
+      "Tüxsen",
+      "Uecker",
+      "Ullmann",
+      "Vetsch",
+      "Vögele",
+      "Vogt",
+      "Vorburger",
+      "Voropova",
+      "Wachter",
+      "Waibel",
+      "Williams",
+      "Xander",
+      "Yachter",
+      "Zäch",
+      "Zimmermann"
+    };
+
+    public static readonly string[] TITLES = new string[] {
+      "27 Lieder zur Weihnachtszeit",
+      "47er Regiments-Marsch",
+      "66 Festive & Famous Chorales For Band",
+      "76 Trombones",
+      "80er KULT(tour)",
+      "A Gospel Christmas",
+      "A Salute From Lucerne",
+      "A Whole New World",
+      "A Whole New World",
+      "ABBA Gold",
+      "Abschieds-Polka",
+      "Adele In Concert",
+      "Africa",
+      "Ain't No Mountain High Enough",
+      "Aladdin",
+      "Alexander's Ragtime Band",
+      "All About That Bass",
+      "All Star",
+      "Alleluia! Laudamus Te",
+      "Alpina",
+      "Also sprach Zarathustra",
+      "Amazing Grace",
+      "Amboss-Polka",
+      "Amora",
+      "Andreas Gabalier in Concert",
+      "Andrew Lloyd Webber In Concert",
+      "Andy",
+      "Anna Magdalenas Song",
+      "Anthem",
+      "Arosa",
+      "Astronautenmarsch",
+      "Auf der Vogelwiese",
+      "Auld Lang Syne",
+      "Aus Böhmen kommt die Musik",
+      "Baby-Face",
+      "Back To The Future",
+      "Bad Bad Leroy Brown",
+      "Ballermann Party",
+      "Barcelona '92",
+      "Beauty And The Best",
+      "Belgano-Marsch",
+      "Best Of Beny Rehmann",
+      "Betula Walzer",
+      "Biberacher Kreismarsch",
+      "Big Time Operator",
+      "Bill Bailey",
+      "Bingo-Marsch",
+      "Blasmusik macht Laune",
+      "Blaze away!",
+      "Böhmische Liebe",
+      "Böhmischer Augenblick",
+      "Böhmischer Traum",
+      "Borsicka-Polka",
+      "Bozner Bergsteiger-Marsch",
+      "Bravura",
+      "Brummerl-Polka",
+      "Bud & Terence",
+      "Bundesrat Gnägi-Marsch",
+      "Call Me Maybe",
+      "Captain America March",
+      "Captain America March",
+      "Caribbean Carnival",
+      "Castor und Pollux",
+      "Celtic Crest",
+      "Celtic Ritual",
+      "Christmas At The Movies",
+      "Circus March",
+      "Concerto D'Amore",
+      "Counting Stars",
+      "Country And Western Meeting",
+      "Crans-Montana",
+      "Crazy Train",
+      "Crenna",
+      "Cubanero",
+      "Dafür mach ma Musik",
+      "Dahoam",
+      "Dahoam is dahoam",
+      "Dance With The Devil",
+      "Danke Hansi",
+      "Darklands Legends",
+      "Das Feuer der Sehnsucht",
+      "Das neue Lied",
+      "De Aegeritaler",
+      "Dem Land Tirol die Treue",
+      "Der gute Kamerad",
+      "Der Klarinetten-Muckl",
+      "Der lustige Winzer",
+      "Deutsche Messe in F-Dur",
+      "Deutschmeister Regiments-Marsch",
+      "Die Blasmusik kommt",
+      "Die Fischerin vom Bodensee",
+      "Die Sonne geht auf",
+      "Dieter Thomas Kuhn Potpourri",
+      "Disney Film Favorites",
+      "Don Pedro",
+      "Don' Stop Me Now",
+      "Don't Stop Me Now",
+      "Dorfkind",
+      "Dr Sidi Abdel Assar vo El Hama",
+      "Drum Time",
+      "Edelwyys",
+      "Eighties Flashback",
+      "Ein halbes Jahrhundert",
+      "Ein Haus voll Glorie schauet",
+      "Ein Leben Lang (A4)",
+      "Ein Leben Lang (A5)",
+      "Ein mal Eins",
+      "Ein Prosit (As-Dur)",
+      "Eine Polka für dich",
+      "El Pedro",
+      "Ernst August Marsch",
+      "Erwin Altherr-Marsch",
+      "Erzherzog-Albrecht-Defiliermarsch",
+      "Europa-Messe",
+      "Evening Prayer",
+      "Eye Level",
+      "Faded",
+      "Faites vos Jeux!",
+      "Fanfare and Flourishes",
+      "Fanfaren",
+      "Fascinating Drums",
+      "Feliz Navidad",
+      "Festivus Fanfare",
+      "Festparade",
+      "Feurig Blut!",
+      "Flic-Flac",
+      "For Ever",
+      "Forget You",
+      "Forgotton World",
+      "Free World Fantasy",
+      "Freude fürs Leben",
+      "Freunde, ja heute feiern wir",
+      "Frisch auf!",
+      "Fuchsgraben-Polka",
+      "Funny Flutes",
+      "Für Freunde",
+      "Gabriella's Song",
+      "Game Of Thrones",
+      "Gangnam Style",
+      "Geburtstagsmarsch",
+      "Gelöbnis",
+      "Gelsomina",
+      "Georgia On My Mind",
+      "Georgia On My Mind",
+      "Gershwin In Concert",
+      "Gladiator - Part 3",
+      "Go Down Moses",
+      "Golden Swing Time",
+      "Gonna Fly Now",
+      "Grease",
+      "Grosser Gott, wir loben dich",
+      "Gruss an Bern",
+      "Gruss an Böhmen",
+      "Grüss mir Böhmen",
+      "Grüsse aus Melnik",
+      "Guete Sunntig mitenand",
+      "Hal-le-lu-ja",
+      "Hallelujah",
+      "Happy",
+      "Hard Rock Hallelujah",
+      "Havah Nagilah",
+      "Havana",
+      "Havana",
+      "Hawaii Five-O",
+      "Heaven",
+      "Heidrun-Polka",
+      "Heirassa - Polka",
+      "Heiterefahne",
+      "Hey Tonight",
+      "High Spirits",
+      "Highland Cathedral",
+      "Hits for Marching Band 2013",
+      "Hogan's Heroes March",
+      "Hootenanny",
+      "Hotel California",
+      "Hound Dog",
+      "How To Train Your Dragon",
+      "Hubitschku do Prahy",
+      "Humpa Humpa",
+      "I Just Called To Say I Love You",
+      "I Pray For The Power Of Love",
+      "I Want It That Way",
+      "I Will Always Love You",
+      "I Will Survive",
+      "I'm A Believer",
+      "I'm A Believer",
+      "Im Blumengarten",
+      "Im Oergelihuus",
+      "Im ruhigen Wald",
+      "Im schönen Böhmerwald",
+      "In der Weinschenke",
+      "In My Dreams",
+      "Infanterie-Regiment 31",
+      "Intonationsübung Thomas Wieser",
+      "Io senza te",
+      "Irish Dream",
+      "It's Raining Men",
+      "Ivanhoe",
+      "Jakob-Schönenberger-Marsch",
+      "James Last Golden Hits",
+      "Jaromir Vejvoda - Portrait",
+      "Jetzt geht's los",
+      "Jonny-Dixie",
+      "Joseph And The Amazing Technicolor Dreamcoat",
+      "Jubel-Marsch",
+      "Jugendparade",
+      "Just A Closer Walk With Thee",
+      "Juventus",
+      "Kalinka",
+      "Kärntner Liedermarsch",
+      "Katharinen-Polka",
+      "King-Size",
+      "Komm zu mir",
+      "Komotauer Polka",
+      "La sera sper il lag",
+      "Lasset uns das Leben geniessen",
+      "Lassus Trombone",
+      "Laubener Schnellpolka",
+      "Lean On Me",
+      "Leopard II-Marsch",
+      "Let it go",
+      "Let Me Entertain You",
+      "Let's Swing Again",
+      "Letztes Abendrot",
+      "Longstreet-Dixie",
+      "Lord Tullamore",
+      "Love can build a Bridge",
+      "Lueget, vo Berg und Tal",
+      "Malojawind",
+      "Mambo No. 5",
+      "Marche des Cent-Suisses",
+      "Marcia Festiva",
+      "Marignan",
+      "Marmor, Stein und Eisen bricht",
+      "Mars der Medici",
+      "Marsch der Grenadiere",
+      "Marsch der Veteranen",
+      "Marsch des hessischen Leib-Garde-Infantrie Regiments Nr. 115",
+      "Marsch des Inf. Regiment 33",
+      "Matrimony",
+      "Meletta",
+      "Mendrisio",
+      "Menzberg",
+      "Merci-Grazie-Engraziel Fitg-Danke",
+      "Mexican Lady",
+      "Michael Jackson Hitmix",
+      "Mit 66 Jahren",
+      "Monsters",
+      "Montana",
+      "Monterosi",
+      "Morgens um Sieben",
+      "Music",
+      "Music",
+      "Music from Frozen",
+      "Music From Frozen 2",
+      "Music From Wicked",
+      "Musik ist Trumpf",
+      "Musik und gute Laune",
+      "Musik vereint!",
+      "Musik, Musik!",
+      "Musikantenfest",
+      "Musketier-Marsch",
+      "My Dream",
+      "My Happy Girl",
+      "Narcotic",
+      "Nearer, My God, To Thee",
+      "O du mein Österreich",
+      "Olonum",
+      "Olympiade",
+      "One Moment In Time",
+      "One Moment In Time",
+      "Over And Out",
+      "Party Rock Anthem",
+      "Perhaps Love",
+      "Pilatus: Mountain of Dragons",
+      "Platzkonzert",
+      "Pokémon Theme",
+      "Pokémon Theme",
+      "Poker Face",
+      "Present Of Love",
+      "Priestermarsch und Arie des Sarastro",
+      "Proud Mary",
+      "Puppet on a String",
+      "Quando, Quando, Quando",
+      "Raggy Trombone",
+      "Ravanello",
+      "Requiem",
+      "Rhythmische Übungen aus der U-Musik",
+      "Rise Like a Phoenix",
+      "Riviera",
+      "Rock Around The Clock",
+      "Rock Opening",
+      "Rock'N'Roll Explosion!",
+      "Rudolph, The Red-Nosed Reindeer",
+      "Ruetz-Marsch",
+      "S'Isch äbe-n-e Mönsch uf Ärde",
+      "S'Zündhölzli",
+      "Salemonia",
+      "Salüd a Bruno Marcolli",
+      "Salut a Luxemburg",
+      "Salute Bernang",
+      "Salvator",
+      "San Carlo",
+      "Sarah",
+      "Schiffsfeger-Polka",
+      "Schweiz - Suisse - Svizzera",
+      "Schweizerpsalm",
+      "Schwyzer-Soldaten",
+      "See You Again",
+      "See you later, Alligator",
+      "Sehnsuchtsmelodie",
+      "Selections From Tarzan",
+      "Sennesinger",
+      "Servus, pfüat Gott und auf Wiedersehn",
+      "Set Fire To The Rain",
+      "Shut Up And Dance",
+      "Sierra Madre Del Sur",
+      "Sir Duke",
+      "Slaidburn",
+      "Slavonicka Polka",
+      "Smoke On The Water",
+      "So schön ist Blasmusik",
+      "Sofia",
+      "Solothurner-Marsch",
+      "Something Stupid",
+      "Son Of A Preacher Man",
+      "Soul Bossa Nova",
+      "Speedy Gonzales",
+      "St. Florian Choral",
+      "St. Galler Veteranen",
+      "St. Galler-Marsch",
+      "Stadlzeit",
+      "Stal Himmel",
+      "Star Wars Saga",
+      "Start frei",
+      "Steirermen san very good",
+      "Stelldichein in Oberkrain",
+      "Stronger",
+      "STS-Medley",
+      "Südböhmische Polka",
+      "Südburgenländische Musikantenpolka",
+      "Sway",
+      "Sweet But Psycho",
+      "Sweet Home Alabama",
+      "Swing March",
+      "Swiss Mountain Village",
+      "Sympatria",
+      "Tage wie diese",
+      "Take On Me",
+      "The Bare Necessities",
+      "The Best Of ABBA",
+      "The Best Of Henry Mancini",
+      "The Floral Dance",
+      "The Great Escape",
+      "The Greatest Showman",
+      "The Incredibles",
+      "The James Bond Theme",
+      "The Liberty Bell",
+      "The Lion King",
+      "The Mask Of Zorro",
+      "The Olympic Spirit",
+      "The Revenge Of The Witch",
+      "The Reviewer",
+      "The Rose",
+      "The Sound Of Silence",
+      "The Story",
+      "The Time Of Your Life",
+      "The Washington Post",
+      "Theme From The A-Team",
+      "TipTop Marsch-Serie",
+      "Tom Jones in Concert",
+      "Top Of The World",
+      "Träumerei",
+      "Tritsch-Tratsch-Polka",
+      "Triumph",
+      "Trompeterruf-Marsch",
+      "Tulpen aus Amsterdam",
+      "Über den Wolken",
+      "Udo Jürgens live",
+      "Uf em Bergli bin i g'sesse",
+      "Under The Boardwalk",
+      "Unsere Schönste",
+      "Urlaubszeit",
+      "Vater Unser",
+      "Venkovska",
+      "Verliebte Augen",
+      "Vielen Dank für die Blumen",
+      "Vivat Bernang!",
+      "Von Freund zu Freund",
+      "Von guten Mächten",
+      "Vor dem Abschied",
+      "Waterloo",
+      "Weidmann Marsch",
+      "Weisse Wolken",
+      "Welcome",
+      "Wellerman",
+      "West Side Story",
+      "Wien bleibt Wien",
+      "Wiener Schwalben",
+      "Winterthur 86",
+      "Wir Musikanten",
+      "Wir sind Wir",
+      "Wolfang Petry Golden Hits",
+      "Wonderful Christmas",
+      "Y.M.C.A",
+      "You Raise Me Up",
+      "You'll Be In My Heart",
+      "Young Band Around The World",
+      "Young Band Dixie",
+      "Zauberland",
+      "Zazà",
+      "Zuger-Marsch",
+      "Zum Abschied",
+      "Zur Feier des Tages",
+      "Zur Feierstunde - L'Heure du Repos",
+      "Zwei lustige Vagabunden",
+    };
+    #endregion CONSTANTS
+
+    #region BOOLEANS
     /// <summary>
-    /// Extension methods for <see cref="Random"/>.
+    /// Generates a random boolean.
     /// </summary>
-    public static class RandomExtensions
-    {
-        #region CONSTANTS
-        public const string ALPHABET = "AÄBCDEFGHIJKLMNOÖPQRSTUÜVWXYZaäbcdefghijklmnoöpqrstuüvwxyz";
-        public const string ALPHANUMERIC = ALPHABET + "0123456789 _!?,.:;'\"*#@()[]{}";
-
-        public static readonly List<string> FIRSTNAMES = new()
-        {
-            "Albert",
-            "Alfred",
-            "Anna",
-            "Beat",
-            "Bettina",
-            "Carina",
-            "Christian",
-            "Christine",
-            "Daniel",
-            "Daniela",
-            "Edith",
-            "Ernst",
-            "Ferdinand",
-            "Franziska",
-            "Freddy",
-            "Gertrud",
-            "Gustav",
-            "Heidi",
-            "Herbert",
-            "Hildegard",
-            "Iris",
-            "Immanuel",
-            "Jana",
-            "Johann",
-            "John",
-            "Karl",
-            "Kassandra",
-            "Katja",
-            "Konrad",
-            "Leonie",
-            "Lukas",
-            "Manuel",
-            "Manuela",
-            "Michael",
-            "Michaela",
-            "Nadine",
-            "Nadja",
-            "Norbert",
-            "Olga",
-            "Otto",
-            "Patricia",
-            "Patrick",
-            "Patrizia",
-            "Renate",
-            "Roland",
-            "Sandro",
-            "Sarah",
-            "Sascha",
-            "Tanja",
-            "Timo",
-            "Uwe",
-            "Veronika",
-            "Viktor",
-            "Werner",
-            "Xenia",
-            "Xeno",
-            "Yanna",
-            "Zacharias",
-        };
-
-        public static readonly List<string> LASTNAMES = new()
-        {
-            "Abbold",
-            "Abderhalden",
-            "Abegg",
-            "Abels",
-            "Ablinger",
-            "Abt",
-            "Ackermann",
-            "Adank",
-            "Aeberhard",
-            "Aebersold",
-            "Aepli",
-            "Aerni",
-            "Aeschbacher",
-            "Affentranger",
-            "Affolter",
-            "Ahrens",
-            "Albrecht",
-            "Alge",
-            "Ammann",
-            "Amrein",
-            "Amstutz",
-            "Anliker",
-            "Bach",
-            "Bachfischer",
-            "Bächler",
-            "Bachmann",
-            "Bader",
-            "Baiker",
-            "Ballmer",
-            "Balz",
-            "Bänziger",
-            "Bardelli",
-            "Barmettler",
-            "Barnieck",
-            "Bartels",
-            "Barth",
-            "Bärtsch",
-            "Bauer",
-            "Baumann",
-            "Baumgartner",
-            "Benz",
-            "Berger",
-            "Bieri",
-            "Bischof",
-            "Bischofberger",
-            "Brändle",
-            "Buschor",
-            "Camenisch",
-            "Carnier",
-            "Caduff",
-            "Christen",
-            "Corsini",
-            "Cristuzzi",
-            "Czech",
-            "Dahinden",
-            "Dähler",
-            "Dallmann",
-            "Debrunner",
-            "Decker",
-            "Degasper",
-            "Degasperi",
-            "Degen",
-            "Di Maria",
-            "Dittmann",
-            "Dodic",
-            "Dolder",
-            "Döriger",
-            "Duff",
-            "Ehrlich",
-            "Färber",
-            "Frank",
-            "Frei",
-            "Gabathuler",
-            "Göthe",
-            "Hofer",
-            "Hongler",
-            "Illedits",
-            "Indermaur",
-            "Jud",
-            "Krüsi",
-            "Künzler",
-            "Kurz",
-            "Lanz",
-            "Mannhart",
-            "Niederer",
-            "Nolte",
-            "Odermatt",
-            "Pfenniger",
-            "Pizio",
-            "Quadry",
-            "Quintero",
-            "Räss",
-            "Rebholz",
-            "Riedi",
-            "Riedener",
-            "Roth",
-            "Schär",
-            "Schläpfer",
-            "Seitz",
-            "Sonderegger",
-            "Strack",
-            "Strauss",
-            "Thür",
-            "Tischhauser",
-            "Tüxsen",
-            "Uecker",
-            "Ullmann",
-            "Vetsch",
-            "Vögele",
-            "Vogt",
-            "Vorburger",
-            "Voropova",
-            "Wachter",
-            "Waibel",
-            "Williams",
-            "Xander",
-            "Yachter",
-            "Zäch",
-            "Zimmermann"
-        };
-        #endregion CONSTANTS
-
-        #region BOOLEANS
-        /// <summary>
-        /// Generates a random boolean.
-        /// </summary>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The generated boolean.</returns>
-        public static bool NextBoolean(this Random random)
-        {
-            return random.Next(2) == 0;
-        }
-        #endregion BOOLEANS
-
-        #region DATETIMES
-        /// <summary>
-        /// Generates a random date.
-        /// </summary>
-        /// <remarks>
-        /// The date is between <see cref="DateTime.MinValue"/> and <see cref="DateTime.MaxValue"/>.
-        /// </remarks>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The random date.</returns>
-        public static DateTime NextDateTime(this Random random)
-        {
-            return NextDateTime(random, DateTime.MinValue, DateTime.MaxValue);
-        }
-
-        /// <summary>
-        /// Generates a random date in the past.
-        /// </summary>
-        /// <remarks>
-        /// The date is between <see cref="DateTime.MinValue"/> and the present date.
-        /// </remarks>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The random date.</returns>
-        public static DateTime NextDateTimePast(this Random random)
-        {
-            return NextDateTime(random, DateTime.MinValue, DateTime.Now);
-        }
-
-        /// <summary>
-        /// Generates a random date in the past.
-        /// </summary>
-        /// <remarks>
-        /// Generates a random date between the specified <paramref name="from"/> date and the present date.
-        /// </remarks>
-        /// <param name="random">The calling object.</param>
-        /// <param name="from">
-        /// The inclusive lower bound of the random date to be generated.
-        /// <paramref name="from"/> must be a past date.
-        /// </param>
-        /// <returns>The random date.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">If <see cref="from"/> is invalid.</exception>
-        public static DateTime NextDateTimePast(this Random random, DateTime from)
-        {
-            if (from > DateTime.Now)
-            {
-                throw new ArgumentOutOfRangeException(nameof(from), $"{nameof(from)} ({from}) must not be in future!");
-            }
-
-            return NextDateTime(random, from, DateTime.Now);
-        }
-
-        /// <summary>
-        /// Generates a random date in the future.
-        /// </summary>
-        /// <remarks>
-        /// The generated date is between the present date and <see cref="DateTime.MaxValue"/>.
-        /// </remarks>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The random date.</returns>
-        public static DateTime NextDateTimeFuture(this Random random)
-        {
-            return NextDateTime(random, DateTime.Now, DateTime.MaxValue);
-        }
-
-        /// <summary>
-        /// Generates a random date in the future.
-        /// </summary>
-        /// <remarks>
-        /// The generated date is between the present date and the specified <paramref name="until"/> date.
-        /// </remarks>
-        /// <param name="random">The calling object.</param>
-        /// <param name="until">
-        /// The exclusive upper bound of the random date to be generated.
-        /// <paramref name="until"/> must be a future date.
-        /// </param>
-        /// <returns>The random date.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">If <see cref="until"/> is invalid.</exception>
-        public static DateTime NextDateTimeFuture(this Random random, DateTime until)
-        {
-            if (until < DateTime.Now)
-            {
-                throw new ArgumentOutOfRangeException(nameof(until), $"{nameof(until)} ({until}) must not be in past!");
-            }
-
-            return NextDateTime(random, DateTime.Now, until);
-        }
-
-        /// <summary>
-        /// Generates a random date int the specified range.
-        /// </summary>
-        /// <param name="random">The calling object.</param>
-        /// <param name="from">
-        /// The inclusive lower bound of the random date to be generated.
-        /// <paramref name="from"/> must be smaller or equal than <paramref name="until"/>.
-        /// </param>
-        /// <param name="until">
-        /// The exclusive upper bound of the random date to be generated.
-        /// <paramref name="until"/> must be greater or equal than <paramref name="from"/>.
-        /// </param>
-        /// <returns>The random date.</returns>
-        public static DateTime NextDateTime(this Random random, DateTime from, DateTime until)
-        {
-            if (until < from)
-            {
-                DateTime temp = until;
-                until = from;
-                from = temp;
-            }
-
-            if (until == from)
-            {
-                return from;
-            }
-            else
-            {
-                return from.AddTicks(random.NextInt64(0, until.Ticks - from.Ticks));
-            }
-        }
-        #endregion DATETIMES
-
-        #region STRINGS
-        /// <summary>
-        /// Generates a random string.
-        /// </summary>
-        /// <remarks>
-        /// The generated string is between 1 and 50 characters long.
-        /// </remarks>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The random string.</returns>
-        public static string NextString(this Random random)
-        {
-            return NextString(random, random.Next(1, 50));
-        }
-
-        /// <summary>
-        /// Generates a random string with length in specified range.
-        /// </summary>
-        /// <param name="random">The calling object.</param>
-        /// <param name="minLength">
-        /// The inclusive lower bound of the length of the random string to be generated.
-        /// <paramref name="minLength"/> must be smaller or equal than <paramref name="maxLength"/>.
-        /// </param>
-        /// <param name="maxLength">
-        /// The exclusive upper bound of the length of the random string to be generated.
-        /// <paramref name="maxLength"/> must be greater than or equal to 0.</param>
-        /// <returns>The random string.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">If the range is invalid!</exception>
-        public static string NextString(this Random random, int minLength, int maxLength)
-        {
-            if (maxLength < minLength)
-            {
-                (minLength, maxLength) = (maxLength, minLength);
-            }
-
-            if (maxLength < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(maxLength), $"Parameter {nameof(maxLength)} ({maxLength}) must be greater or equal to zero!");
-            }
-            else if (minLength < 0)
-            {
-                minLength = 0;
-            }
-
-            return NextString(random, random.Next(minLength, maxLength));
-        }
-
-        /// <summary>
-        /// Generates a random string with specified length.
-        /// </summary>
-        /// <param name="random">The calling object.</param>
-        /// <param name="length">The length of the random string to be generated.</param>
-        /// <returns>The random string.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static string NextString(this Random random, int length)
-        {
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(length), "String length must not be lower than zero!");
-            }
-            string temp = string.Empty;
-
-            for (int i = 0; i < length; i++)
-            {
-                temp += ALPHABET[random.Next(ALPHABET.Length)];
-            }
-
-            return temp;
-        }
-        #endregion STRINGS
-
-        #region PERSONS
-        /// <summary>
-        /// Returns a random firstname.
-        /// </summary>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The firstname.</returns>
-        public static string NextFirstname(this Random random)
-        {
-            return FIRSTNAMES[random.Next(FIRSTNAMES.Count)];
-        }
-
-        /// <summary>
-        /// Returns a random lastname.
-        /// </summary>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The lastname.</returns>
-        public static string NextLastname(this Random random)
-        {
-            return LASTNAMES[random.Next(LASTNAMES.Count)];
-        }
-
-        /// <summary>
-        /// Returns a random firstname and lastname combination.
-        /// </summary>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The firstname and lastname combination.</returns>
-        public static (string Firstname, string Lastname) NextName(this Random random)
-        {
-            return (FIRSTNAMES[random.Next(FIRSTNAMES.Count)], LASTNAMES[random.Next(LASTNAMES.Count)]);
-        }
-
-        /// <summary>
-        /// Generates a random person.
-        /// </summary>
-        /// <remarks>
-        /// A person consists of a firstname, a lastname and a birthdate in the past.
-        /// </remarks>
-        /// <param name="random">The calling object.</param>
-        /// <returns>The random person.</returns>
-        public static (string Firstname, string Lastname, DateOnly Birthdate) NextPerson(this Random random)
-        {
-            (string Firstname, string Lastname) name = NextName(random);
-
-            int year = random.Next(DateTime.Now.Year - 100, DateTime.Now.Year - 1);
-            int month = random.Next(1, 13);
-            int day = random.Next(1, DateTime.DaysInMonth(year, month) + 1);
-
-            return (name.Firstname, name.Lastname, new DateOnly(year, month, day));
-        }
-        #endregion PERSONS
+    /// <param name="random">The calling object.</param>
+    /// <returns>The generated boolean.</returns>
+    public static bool NextBoolean(this Random random) {
+      return random.Next(2) == 0;
     }
+    #endregion BOOLEANS
+
+    #region DATETIMES
+    /// <summary>
+    /// Generates a random date.
+    /// </summary>
+    /// <remarks>
+    /// The date is between <see cref="DateTime.MinValue"/> and <see cref="DateTime.MaxValue"/>.
+    /// </remarks>
+    /// <param name="random">The calling object.</param>
+    /// <returns>The random date.</returns>
+    public static DateTime NextDateTime(this Random random) {
+      return NextDateTime(random, DateTime.MinValue, DateTime.MaxValue);
+    }
+
+    /// <summary>
+    /// Generates a random date in the past.
+    /// </summary>
+    /// <remarks>
+    /// The date is between <see cref="DateTime.MinValue"/> and the present date.
+    /// </remarks>
+    /// <param name="random">The calling object.</param>
+    /// <returns>The random date.</returns>
+    public static DateTime NextDateTimePast(this Random random) {
+      return NextDateTime(random, DateTime.MinValue, DateTime.Now);
+    }
+
+    /// <summary>
+    /// Generates a random date in the past.
+    /// </summary>
+    /// <remarks>
+    /// Generates a random date between the specified <paramref name="from"/> date and the present date.
+    /// </remarks>
+    /// <param name="random">The calling object.</param>
+    /// <param name="from">
+    /// The inclusive lower bound of the random date to be generated.
+    /// <paramref name="from"/> must be a past date.
+    /// </param>
+    /// <returns>The random date.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">If <see cref="from"/> is invalid.</exception>
+    public static DateTime NextDateTimePast(this Random random, DateTime from) {
+      if (from > DateTime.Now) {
+        throw new ArgumentOutOfRangeException(nameof(from), $"{nameof(from)} ({from}) must not be in future!");
+      }
+
+      return NextDateTime(random, from, DateTime.Now);
+    }
+
+    /// <summary>
+    /// Generates a random date in the future.
+    /// </summary>
+    /// <remarks>
+    /// The generated date is between the present date and <see cref="DateTime.MaxValue"/>.
+    /// </remarks>
+    /// <param name="random">The calling object.</param>
+    /// <returns>The random date.</returns>
+    public static DateTime NextDateTimeFuture(this Random random) {
+      return NextDateTime(random, DateTime.Now, DateTime.MaxValue);
+    }
+
+    /// <summary>
+    /// Generates a random date in the future.
+    /// </summary>
+    /// <remarks>
+    /// The generated date is between the present date and the specified <paramref name="until"/> date.
+    /// </remarks>
+    /// <param name="random">The calling object.</param>
+    /// <param name="until">
+    /// The exclusive upper bound of the random date to be generated.
+    /// <paramref name="until"/> must be a future date.
+    /// </param>
+    /// <returns>The random date.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">If <see cref="until"/> is invalid.</exception>
+    public static DateTime NextDateTimeFuture(this Random random, DateTime until) {
+      if (until < DateTime.Now) {
+        throw new ArgumentOutOfRangeException(nameof(until), $"{nameof(until)} ({until}) must not be in past!");
+      }
+
+      return NextDateTime(random, DateTime.Now, until);
+    }
+
+    /// <summary>
+    /// Generates a random date int the specified range.
+    /// </summary>
+    /// <param name="random">The calling object.</param>
+    /// <param name="from">
+    /// The inclusive lower bound of the random date to be generated.
+    /// <paramref name="from"/> must be smaller or equal than <paramref name="until"/>.
+    /// </param>
+    /// <param name="until">
+    /// The exclusive upper bound of the random date to be generated.
+    /// <paramref name="until"/> must be greater or equal than <paramref name="from"/>.
+    /// </param>
+    /// <returns>The random date.</returns>
+    public static DateTime NextDateTime(this Random random, DateTime from, DateTime until) {
+      if (until < from) {
+        DateTime temp = until;
+        until = from;
+        from = temp;
+      }
+
+      if (until == from) {
+        return from;
+      } else {
+        return from.AddTicks(random.NextInt64(0, until.Ticks - from.Ticks));
+      }
+    }
+    #endregion DATETIMES
+
+    #region STRINGS
+    /// <summary>
+    /// Generates a random string.
+    /// </summary>
+    /// <remarks>
+    /// The generated string is between 1 and 50 characters long.
+    /// </remarks>
+    /// <param name="random">The calling object.</param>
+    /// <returns>The random string.</returns>
+    public static string NextString(this Random random) {
+      return NextString(random, random.Next(1, 50));
+    }
+
+    /// <summary>
+    /// Generates a random string with length in specified range.
+    /// </summary>
+    /// <param name="random">The calling object.</param>
+    /// <param name="minLength">
+    /// The inclusive lower bound of the length of the random string to be generated.
+    /// <paramref name="minLength"/> must be smaller or equal than <paramref name="maxLength"/>.
+    /// </param>
+    /// <param name="maxLength">
+    /// The exclusive upper bound of the length of the random string to be generated.
+    /// <paramref name="maxLength"/> must be greater than or equal to 0.</param>
+    /// <returns>The random string.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">If the range is invalid!</exception>
+    public static string NextString(this Random random, int minLength, int maxLength) {
+      if (maxLength < minLength) {
+        (minLength, maxLength) = (maxLength, minLength);
+      }
+
+      if (maxLength < 0) {
+        throw new ArgumentOutOfRangeException(nameof(maxLength), $"Parameter {nameof(maxLength)} ({maxLength}) must be greater or equal to zero!");
+      } else if (minLength < 0) {
+        minLength = 0;
+      }
+
+      return NextString(random, random.Next(minLength, maxLength));
+    }
+
+    /// <summary>
+    /// Generates a random string with specified length.
+    /// </summary>
+    /// <param name="random">The calling object.</param>
+    /// <param name="length">The length of the random string to be generated.</param>
+    /// <returns>The random string.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public static string NextString(this Random random, int length) {
+      if (length < 0) {
+        throw new ArgumentOutOfRangeException(nameof(length), "String length must not be lower than zero!");
+      }
+      string temp = string.Empty;
+
+      for (int i = 0; i < length; i++) {
+        temp += ALPHABET[random.Next(ALPHABET.Length)];
+      }
+
+      return temp;
+    }
+
+    public static string NextTitle(this Random random) {
+      return TITLES[random.Next(TITLES.Length)];
+    }
+    #endregion STRINGS
+
+    #region PERSONS
+    /// <summary>
+    /// Returns a random firstname.
+    /// </summary>
+    /// <param name="random">The calling object.</param>
+    /// <returns>The firstname.</returns>
+    public static string NextFirstname(this Random random) {
+      return FIRSTNAMES[random.Next(FIRSTNAMES.Length)];
+    }
+
+    /// <summary>
+    /// Returns a random lastname.
+    /// </summary>
+    /// <param name="random">The calling object.</param>
+    /// <returns>The lastname.</returns>
+    public static string NextLastname(this Random random) {
+      return LASTNAMES[random.Next(LASTNAMES.Length)];
+    }
+
+    /// <summary>
+    /// Returns a random firstname and lastname combination.
+    /// </summary>
+    /// <param name="random">The calling object.</param>
+    /// <returns>The firstname and lastname combination.</returns>
+    public static (string Firstname, string Lastname) NextName(this Random random) {
+      return (FIRSTNAMES[random.Next(FIRSTNAMES.Length)], LASTNAMES[random.Next(LASTNAMES.Length)]);
+    }
+
+    /// <summary>
+    /// Generates a random person.
+    /// </summary>
+    /// <remarks>
+    /// A person consists of a firstname, a lastname and a birthdate in the past.
+    /// </remarks>
+    /// <param name="random">The calling object.</param>
+    /// <returns>The random person.</returns>
+    public static (string Firstname, string Lastname, DateOnly Birthdate) NextPerson(this Random random) {
+      (string Firstname, string Lastname) name = NextName(random);
+
+      int year = random.Next(DateTime.Now.Year - 100, DateTime.Now.Year - 1);
+      int month = random.Next(1, 13);
+      int day = random.Next(1, DateTime.DaysInMonth(year, month) + 1);
+
+      return (name.Firstname, name.Lastname, new DateOnly(year, month, day));
+    }
+    #endregion PERSONS
+  }
 }
