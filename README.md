@@ -1,2 +1,2 @@
-# SW.Framework
+# Framework
 Library with useful functions.
