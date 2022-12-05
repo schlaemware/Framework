@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace SW.MUSICBase.Logic.Security {
+namespace SW.Framework.Security {
   public sealed class PasswordHasher {
     private const int _SALT_SIZE = 16; // 128 bit 
     private const int _KEY_SIZE = 32; // 256 bit

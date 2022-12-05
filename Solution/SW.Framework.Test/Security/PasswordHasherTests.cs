@@ -1,4 +1,4 @@
-﻿using SW.MUSICBase.Logic.Security;
+﻿using SW.Framework.Security;
 
 namespace SW.Framework.Test.Security {
   [TestClass]

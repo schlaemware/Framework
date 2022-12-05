@@ -1,4 +1,4 @@
-﻿namespace SW.MUSICBase.Logic.Security {
+﻿namespace SW.Framework.Security {
   public sealed class HashingOptions {
     public int Iterations { get; }
 
