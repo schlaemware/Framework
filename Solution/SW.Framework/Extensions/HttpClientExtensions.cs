@@ -1,4 +1,7 @@
 ﻿namespace SW.Framework.Extensions {
+  /// <summary>
+  /// Extension methods for <see cref="HttpClient"/>.
+  /// </summary>
   public static class HttpClientExtensions {
     /// <summary>
     /// Download from internet asynchronously.
@@ -12,12 +15,12 @@
     /// <param name="progress"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, IProgress<float> progress = null, CancellationToken cancellationToken = default) {
+    public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, IProgress<float>? progress = null, CancellationToken cancellationToken = default) {
       // Get the http headers first to examine the content length
       using (HttpResponseMessage response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead)) {
         long? contentLength = response.Content.Headers.ContentLength;
 
-        using (var download = await response.Content.ReadAsStreamAsync()) {
+        using (Stream download = await response.Content.ReadAsStreamAsync()) {
           // Ignore progress reporting when no progress reporter was
           // passed or when the content length is unknown
           if (progress == null || !contentLength.HasValue) {
@@ -27,6 +30,7 @@
 
           // Convert absolute progress (bytes downloaded) into relative progress
           Progress<long> relativeProgress = new Progress<long>(totalBytes => progress.Report((float)totalBytes / contentLength.Value));
+
           // Use extension method to report progress while downloading
           await download.CopyToAsync(destination, 81920, relativeProgress, cancellationToken);
           progress.Report(1);

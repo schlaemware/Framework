@@ -3,24 +3,21 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>disable</Nullable>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Nullable>enable</Nullable>
+    <Title>Framework</Title>
+    <Version>0.0.2</Version>
     <Authors>MSC</Authors>
-    <Product>Framework</Product>
-    <Description>Library with useful functions.</Description>
-    <Copyright>Copyright © by Schlæmware</Copyright>
-    <PackageTags>Schlæmware;SW;Framework</PackageTags>
-    <PackageReleaseNotes>Initialized project.</PackageReleaseNotes>
-    <Version>0.0.1</Version>
     <Company>Schlæmware</Company>
-    <SignAssembly>False</SignAssembly>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryType>Git</RepositoryType>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <Product>Framework</Product>
+    <Description>Libraries with useful functions.</Description>
+    <Copyright>Copyright © by Schlæmware</Copyright>
+    <PackageProjectUrl>https://github.com/schlaemware/Framework</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/schlaemware/SW.Framework</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/schlaemware/SW.Framework</PackageProjectUrl>
-    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryUrl>https://github.com/schlaemware/Framework</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>Schlæmware;SW;Framework</PackageTags>
+    <PackageReleaseNotes>Project initialized.</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
