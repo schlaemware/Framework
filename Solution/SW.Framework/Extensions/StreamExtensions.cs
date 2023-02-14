@@ -33,7 +33,7 @@
       int bytesRead;
 
       while ((bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false)) != 0) {
-        await destination.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
+        await destination.WriteAsync(buffer.AsMemory(0, bytesRead), cancellationToken).ConfigureAwait(false);
         totalBytesRead += bytesRead;
         progress?.Report(totalBytesRead);
       }
