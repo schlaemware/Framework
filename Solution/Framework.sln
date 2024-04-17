@@ -5,9 +5,11 @@ VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevConsole", "DevConsole\DevConsole.csproj", "{ABF336C5-70A1-4361-849A-FDC53337900B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SW.Framework", "SW.Framework\SW.Framework.csproj", "{B7161094-5CAC-46B2-83DD-6BC75A824BC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SW.Framework", "SW.Framework\SW.Framework.csproj", "{B7161094-5CAC-46B2-83DD-6BC75A824BC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SW.Framework.Test", "SW.Framework.Test\SW.Framework.Test.csproj", "{E10DC421-E3A9-4F2A-AE3C-5987605DCBCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SW.Framework.Test", "SW.Framework.Test\SW.Framework.Test.csproj", "{E10DC421-E3A9-4F2A-AE3C-5987605DCBCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6CF3FFC9-AF5E-4AB7-8323-141F8B969D3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E10DC421-E3A9-4F2A-AE3C-5987605DCBCF} = {6CF3FFC9-AF5E-4AB7-8323-141F8B969D3F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C30B04AD-7C13-472E-AE53-69F73E07A67C}
