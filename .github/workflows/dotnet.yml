@@ -1,0 +1,93 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  workflow_dispatch:  # Allow running the workflow manually from the GitHub UI
+  push:
+    branches:
+      - 'master'      # Run the workflow when pushing to the master branch
+      - 'develop'     # Run the workflow when pushing to the develop branch
+  pull_request:
+    branches:
+      - '*'           # Run the workflow for all pull requests
+  release:
+    types:
+      - published     # Run the workflow when a new GitHub release is published
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  NuGetDirectory: ${{ github.workspace }}/nuget
+  
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+        
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore
+      run: dotnet restore 'Solution/Framework.sln'
+      
+    - name: Build
+      run: dotnet build 'Solution/Framework.sln' --no-restore
+      
+    - name: Test
+      run: dotnet test 'Solution/Framework.sln' --no-build --verbosity normal
+
+  create:
+    runs-on: ubuntu-latest
+    needs: [ test ]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    
+    - name: Create NuGet
+      run: dotnet pack 'Solution/SW.Framework/SW.Framework.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
+
+    - name: Publish artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: nuget
+        if-no-files-found: error
+        retention-days: 7
+        path: ${{ env.NuGetDirectory }}/*.nupkg
+
+  deploy:
+    if : github.event_name == 'release'
+    runs-on: ubuntu-latest
+    needs: [ create ]
+    steps:
+      # Download the NuGet package created in the previous job
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ${{ env.NuGetDirectory }}
+
+      # Install the .NET SDK
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v4
+
+      # Publish all NuGet packages to NuGet.org
+      # Use --skip-duplicate to prevent errors if a package with the same version already exists.
+      # If you retry a failed workflow, already published packages will be skipped without error.
+      - name: Publish NuGet packages
+        run: |
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
+              dotnet nuget push $file --api-key "${{ secrets.NUGET_APIKEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+          }

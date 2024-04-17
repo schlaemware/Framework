@@ -1,11 +1,14 @@
-﻿namespace SW.Framework.Security {
-  public sealed class HashingOptions {
-    public int Iterations { get; }
+﻿namespace SW.Framework.Security
+{
+    public sealed class HashingOptions
+    {
+        public int Iterations { get; }
 
-    #region CONSTRUCTORS
-    public HashingOptions(int iterations) {
-      Iterations = iterations;
+        #region CONSTRUCTORS
+        public HashingOptions(int iterations)
+        {
+            Iterations = iterations;
+        }
+        #endregion CONSTRUCTORS
     }
-    #endregion CONSTRUCTORS
-  }
 }
