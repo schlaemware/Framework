@@ -33,7 +33,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
         
-    - name: Restore dependencies
+    - name: Restore
       run: dotnet restore 'Solution/Framework.sln'
       
     - name: Build
@@ -49,23 +49,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0 # Get all history
+        fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v1.1.1
-      with:
-        versionSpec: '5.x'
-
-    - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v1.1.1
     
     - name: Create NuGet
-      run: dotnet pack 'Solution/Framework.sln' --configuration Release --output ${{ env.NuGetDirectory }}
+      run: dotnet pack 'Solution/SW.Framework/SW.Framework.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
 
     - name: Publish artifact
       uses: actions/upload-artifact@v3
