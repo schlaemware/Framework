@@ -16,6 +16,11 @@ on:
     types:
       - published     # Run the workflow when a new GitHub release is published
 
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  NuGetDirectory: ${{ github.workspace }}/nuget
+  
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -52,7 +57,7 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Create NuGet
-      run: dotnet pack Solution/Framework.sln --configuration Release --output ${{ env.NuGetDirectory }}
+      run: dotnet pack 'Solution/Framework.sln' --configuration Release --output ${{ env.NuGetDirectory }}
 
     - name: Publish artifact
       uses: actions/upload-artifact@v3
