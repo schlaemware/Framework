@@ -16,7 +16,7 @@
     <RepositoryUrl>https://github.com/schlaemware/Framework</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>Schlæmware;SW;Framework</PackageTags>
-    <PackageReleaseNotes>Project initialized.</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <EnablePackageValidation>true</EnablePackageValidation>
   </PropertyGroup>
