@@ -7,7 +7,7 @@ namespace SW.Framework.Security
         private const int _SALT_SIZE = 16; // 128 bit 
         private const int _KEY_SIZE = 32; // 256 bit
 
-        private readonly HashingOptions _Options;
+        private readonly HashingOptions _options;
 
         #region CONSTRUCTORS
         /// <summary>
@@ -16,7 +16,7 @@ namespace SW.Framework.Security
         /// <param name="options"></param>
         public PasswordHasher(HashingOptions options)
         {
-            _Options = options;
+            _options = options;
         }
         #endregion CONSTRUCTORS
 
@@ -27,15 +27,11 @@ namespace SW.Framework.Security
         /// <returns></returns>
         public string Hash(string password)
         {
-            using (Rfc2898DeriveBytes algorithm = new Rfc2898DeriveBytes(
-              password,
-              _SALT_SIZE,
-              _Options.Iterations,
-              HashAlgorithmName.SHA512)) {
+            using (Rfc2898DeriveBytes algorithm = new Rfc2898DeriveBytes(password, _SALT_SIZE, _options.Iterations, HashAlgorithmName.SHA512)) {
                 string key = Convert.ToBase64String(algorithm.GetBytes(_KEY_SIZE));
                 string salt = Convert.ToBase64String(algorithm.Salt);
 
-                return $"{_Options.Iterations}.{salt}.{key}";
+                return $"{_options.Iterations}.{salt}.{key}";
             }
         }
 
@@ -62,7 +58,7 @@ namespace SW.Framework.Security
             byte[] salt = Convert.FromBase64String(parts[1]);
             byte[] key = Convert.FromBase64String(parts[2]);
 
-            bool needsUpgrade = iterations != _Options.Iterations;
+            bool needsUpgrade = iterations != _options.Iterations;
 
             using (Rfc2898DeriveBytes algorithm = new(password, salt, iterations, HashAlgorithmName.SHA512)) {
                 byte[] keyToCheck = algorithm.GetBytes(_KEY_SIZE);
