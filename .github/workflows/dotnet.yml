@@ -19,7 +19,7 @@ on:
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
-  NuGetDirectory: ${{ github.workspace }}/nuget
+  NuGetDirectory: ${{ github.workspace }}\nuget
   
 jobs:
   test:
@@ -34,13 +34,13 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Restore
-      run: dotnet restore 'Solution/Framework.sln'
+      run: dotnet restore 'Solution\Framework.sln'
       
     - name: Build
-      run: dotnet build 'Solution/Framework.sln' --no-restore
+      run: dotnet build 'Solution\Framework.sln' --no-restore
       
     - name: Test
-      run: dotnet test 'Solution/Framework.sln' --no-build --verbosity normal
+      run: dotnet test 'Solution\Framework.sln' --no-build --verbosity normal
 
   create:
     runs-on: windows-latest
@@ -58,8 +58,8 @@ jobs:
     
     - name: Create NuGet
       run: |
-        dotnet pack 'Solution/SW.Framework/SW.Framework.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
-        dotnet pack 'Solution/SW.Framework.WPF/SW.Framework.WPF.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
+        dotnet pack 'Solution\SW.Framework\SW.Framework.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
+        dotnet pack 'Solution\SW.Framework.WPF\SW.Framework.WPF.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
 
     - name: Publish artifact
       uses: actions/upload-artifact@v3
@@ -67,7 +67,7 @@ jobs:
         name: nuget
         if-no-files-found: error
         retention-days: 7
-        path: ${{ env.NuGetDirectory }}/*.nupkg
+        path: ${{ env.NuGetDirectory }}\*.nupkg
 
   deploy:
     if : github.event_name == 'release'
@@ -89,4 +89,7 @@ jobs:
       # Use --skip-duplicate to prevent errors if a package with the same version already exists.
       # If you retry a failed workflow, already published packages will be skipped without error.
       - name: Publish NuGet packages
-        run: dotnet nuget push "${{ env.NuGetDirectory }}/*.nupkg" --api-key "${{ secrets.DEPLOY_TOKEN }}" --source https://nuget.pkg.github.com/schlaemware/index.json --skip-duplicate
+        run: |
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
+            dotnet nuget push $file --api-key "${{ secrets.DEPLOY_TOKEN }}" --source https://nuget.pkg.github.com/schlaemware/index.json --skip-duplicate
+          }
