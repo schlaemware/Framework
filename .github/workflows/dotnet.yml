@@ -57,7 +57,9 @@ jobs:
         dotnet-version: 8.0.x
     
     - name: Create NuGet
-      run: dotnet pack 'Solution/SW.Framework/SW.Framework.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
+      run: |
+        dotnet pack 'Solution/SW.Framework/SW.Framework.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
+        dotnet pack 'Solution/SW.Framework.WPF/SW.Framework.WPF.csproj' --configuration Release --output ${{ env.NuGetDirectory }}
 
     - name: Publish artifact
       uses: actions/upload-artifact@v3
